@@ -11,7 +11,7 @@
 #
 
 # package/passwall
-git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
+git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
 
 # luci-theme-argon
 rm -rf feeds/luci/themes/luci-theme-argon
