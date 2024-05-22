@@ -25,8 +25,11 @@ jobs:
   check:
     runs-on: ubuntu-latest
 
-    steps:
+    permissions:
+      metadata: read
+      contents: write
 
+    steps:
     - name: Get Commit Hash
       id: getHash
       run: |
