@@ -10,6 +10,9 @@
 # See /LICENSE for more information.
 #
 
+# package
+git clone https://github.com/kenzok8/small-package package/small
+
 # package/passwall
 git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
 
