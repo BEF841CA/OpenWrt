@@ -83,8 +83,10 @@ jobs:
     - name: Delete Flag
       if: steps.get_trigger_build_flag.outputs.cache-hit != 'true'
       run: |
+        REPO=${{ github.repository }}
+        BRANCH=refs/pull/${{ github.event.pull_request.number }}/merge
         gh extension install actions/gh-actions-cache
-        gh actions-cache delete trigger_build_flag --confirm
+        gh actions-cache delete trigger_build_flag -R $REPO -B $BRANCH --confirm
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
