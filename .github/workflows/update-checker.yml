@@ -74,14 +74,14 @@ jobs:
         key: trigger_build_flag
         
     - name: Trigger build
-      if: steps.get_trigger_build_flag.outputs.cache-hit != 'true'
+      if: steps.get_trigger_build_flag.outputs.cache-hit == 'true'
       uses: peter-evans/repository-dispatch@v3
       with:
         token: ${{ github.token }}
         event-type: Source Code Update
 
     - name: Delete Flag
-      if: steps.get_trigger_build_flag.outputs.cache-hit != 'true'
+      if: steps.get_trigger_build_flag.outputs.cache-hit == 'true'
       run: |
         REPO=${{ github.repository }}
         BRANCH=refs/pull/${{ github.event.pull_request.number }}/merge
