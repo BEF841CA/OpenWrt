@@ -10,6 +10,9 @@
 # See /LICENSE for more information.
 #
 
+# samba
+rm -rf package/lean/autosamba
+
 # luci-theme-argon
 rm -rf feeds/luci/themes/luci-theme-argon
 git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/downloads/luci-theme-argon
