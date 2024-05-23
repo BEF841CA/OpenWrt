@@ -31,9 +31,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Create file
-      run: touch .commitHash
-
     - name: Get Commit Hash
       id: getHash
       run: |
@@ -47,6 +44,11 @@ jobs:
         path: .commitHash
         key: commitHash_${{ steps.getHash.outputs.commitHash }}
 
+    - name: Save New Commit Hash
+      if: steps.cacheHash.outputs.cache-hit != 'true'
+      run: |
+        echo ${{ steps.getHash.outputs.commitHash }} | tee .commitHash
+
     - name: Set Flag
       if: steps.cacheHash.outputs.cache-hit != 'true'
       uses: actions/cache@v4
@@ -58,9 +60,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Create file
-      run: touch .commitHash
-
     - name: Get Commit Hash
       id: getHash
       run: |
@@ -74,6 +73,11 @@ jobs:
         path: .commitHash
         key: commitHash_${{ steps.getHash.outputs.commitHash }}
 
+    - name: Save New Commit Hash
+      if: steps.cacheHash.outputs.cache-hit != 'true'
+      run: |
+        echo ${{ steps.getHash.outputs.commitHash }} | tee .commitHash
+
     - name: Set Flag
       if: steps.cacheHash.outputs.cache-hit != 'true'
       uses: actions/cache@v4
@@ -85,9 +89,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Create file
-      run: touch .commitHash
-
     - name: Get Commit Hash
       id: getHash
       run: |
@@ -100,6 +101,11 @@ jobs:
       with:
         path: .commitHash
         key: commitHash_${{ steps.getHash.outputs.commitHash }}
+
+    - name: Save New Commit Hash
+      if: steps.cacheHash.outputs.cache-hit != 'true'
+      run: |
+        echo ${{ steps.getHash.outputs.commitHash }} | tee .commitHash
 
     - name: Set Flag
       if: steps.cacheHash.outputs.cache-hit != 'true'
