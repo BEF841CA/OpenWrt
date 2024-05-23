@@ -4,7 +4,7 @@
 
 ## 特点
 
-- 自动拉取lede最新源码自动编译（每月一次）
+- 自动拉取[lede](https://github.com/coolsnowwolf/lede)最新源码自动编译（每月一次）
 - 纯净版无自带插件
 - 默认使用argon主题
 
