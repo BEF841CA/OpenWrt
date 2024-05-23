@@ -16,15 +16,13 @@ env:
   GH_TOKEN: ${{ github.token }}
   REPO_URL1: https://github.com/coolsnowwolf/lede
   REPO_BRANCH1: master
-  REPO_URL2: https://github.com/xiaorouji/openwrt-passwall2
-  REPO_BRANCH2: main
-  REPO_URL3: https://github.com/jerrykuku/luci-theme-argon
-  REPO_BRANCH3: 18.06
+  REPO_URL2: https://github.com/jerrykuku/luci-theme-argon
+  REPO_BRANCH2: 18.06
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: 0 */18 * * *
+    - cron: 0 1 1 * *
 
 jobs:
   check_repo1:
@@ -85,37 +83,8 @@ jobs:
         path: .commitHash
         key: trigger_build_flag
 
-  check_repo3:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Get Commit Hash
-      id: getHash
-      run: |
-        git clone --depth 1 $REPO_URL3 -b $REPO_BRANCH3 .
-        echo "commitHash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-
-    - name: Compare Commit Hash
-      id: cacheHash
-      uses: actions/cache@v4
-      with:
-        path: .commitHash
-        key: commitHash_${{ steps.getHash.outputs.commitHash }}
-
-    - name: Save New Commit Hash
-      if: steps.cacheHash.outputs.cache-hit != 'true'
-      run: |
-        echo ${{ steps.getHash.outputs.commitHash }} | tee .commitHash
-
-    - name: Set Flag
-      if: steps.cacheHash.outputs.cache-hit != 'true'
-      uses: actions/cache@v4
-      with:
-        path: .commitHash
-        key: trigger_build_flag
-
   trigger_build:
-    needs: [check_repo1, check_repo2, check_repo3]
+    needs: [check_repo1, check_repo2]
     runs-on: ubuntu-latest
 
     permissions:
