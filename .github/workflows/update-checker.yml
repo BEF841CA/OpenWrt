@@ -16,9 +16,9 @@ env:
   GH_TOKEN: ${{ github.token }}
   REPO_URL1: https://github.com/coolsnowwolf/lede
   REPO_BRANCH1: master
-  REPO_UR2L: https://github.com/xiaorouji/openwrt-passwall2
+  REPO_URL2: https://github.com/xiaorouji/openwrt-passwall2
   REPO_BRANCH2: master
-  REPO_UR3L: https://github.com/jerrykuku/luci-theme-argon
+  REPO_URL3: https://github.com/jerrykuku/luci-theme-argon
   REPO_BRANCH3: 18.06
 
 on:
@@ -100,7 +100,7 @@ jobs:
         key: trigger_build_flag
 
   trigger_build:
-    needs: [check_repo1, check_repo2]
+    needs: [check_repo1, check_repo2, check_repo3]
     runs-on: ubuntu-latest
 
     permissions:
