@@ -31,6 +31,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Create file
+      run: touch .commitHash
+
     - name: Get Commit Hash
       id: getHash
       run: |
@@ -50,11 +53,14 @@ jobs:
       with:
         path: .commitHash
         key: trigger_build_flag
-  
+
   check_repo2:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Create file
+      run: touch .commitHash
+
     - name: Get Commit Hash
       id: getHash
       run: |
@@ -79,6 +85,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Create file
+      run: touch .commitHash
+
     - name: Get Commit Hash
       id: getHash
       run: |
