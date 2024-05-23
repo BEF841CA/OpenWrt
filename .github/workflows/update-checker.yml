@@ -22,12 +22,8 @@ on:
     - cron: 0 */18 * * *
 
 jobs:
-  check:
+  check_repo1:
     runs-on: ubuntu-latest
-
-    permissions:
-      actions: write
-      contents: write
 
     steps:
     - name: Get Commit Hash
@@ -38,22 +34,55 @@ jobs:
 
     - name: Compare Commit Hash
       id: cacheHash
-      uses: actions/cache@v3
+      uses: actions/cache@v4
+      with:
+        path: .commitHash
+        key: commitHash_${{ steps.getHash.outputs.commitHash }}
+  
+  check_repo2:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get Commit Hash
+      id: getHash
+      run: |
+        git clone --depth 1 $REPO_URL -b $REPO_BRANCH .
+        echo "commitHash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+    - name: Compare Commit Hash
+      id: cacheHash
+      uses: actions/cache@v4
       with:
         path: .commitHash
         key: commitHash_${{ steps.getHash.outputs.commitHash }}
 
-    - name: Save New Commit Hash
-      if: steps.cacheHash.outputs.cache-hit != 'true'
-      run: |
-        echo ${{ steps.getHash.outputs.commitHash }} | tee .commitHash
+  trigger_build:
+    runs-on: ubuntu-latest
 
+    permissions:
+      actions: write
+      contents: write
+
+    steps:
+    - name: Get Trigger Build Flag
+      id: get_trigger_build_flag
+      uses: actions/cache@v4
+      with:
+        path: .commitHash
+        key: trigger_build_flag
+        
     - name: Trigger build
-      if: steps.cacheHash.outputs.cache-hit != 'true'
+      if: steps.get_trigger_build_flag.outputs.cache-hit != 'true'
       uses: peter-evans/repository-dispatch@v3
       with:
         token: ${{ github.token }}
         event-type: Source Code Update
+
+    - name: Delete Flag
+      if: steps.get_trigger_build_flag.outputs.cache-hit != 'true'
+      run: |
+        gh extension install actions/gh-actions-cache
+        gh actions-cache delete trigger_build_flag --confirm
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
