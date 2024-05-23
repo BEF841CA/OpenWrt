@@ -17,7 +17,7 @@ env:
   REPO_URL1: https://github.com/coolsnowwolf/lede
   REPO_BRANCH1: master
   REPO_URL2: https://github.com/xiaorouji/openwrt-passwall2
-  REPO_BRANCH2: master
+  REPO_BRANCH2: main
   REPO_URL3: https://github.com/jerrykuku/luci-theme-argon
   REPO_BRANCH3: 18.06
 
