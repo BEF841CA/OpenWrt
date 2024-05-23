@@ -13,6 +13,7 @@
 name: Update Checker
 
 env:
+  GH_TOKEN: ${{ github.token }}
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
 
@@ -57,6 +58,7 @@ jobs:
         key: commitHash_${{ steps.getHash.outputs.commitHash }}
 
   trigger_build:
+    needs: [check_repo1, check_repo2]
     runs-on: ubuntu-latest
 
     permissions:
