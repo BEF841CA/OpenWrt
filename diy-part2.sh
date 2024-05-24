@@ -11,7 +11,7 @@
 #
 
 # samba
-rm -rf package/lean/autosamba
+#rm -rf package/lean/autosamba
 
 # luci-theme-argon
 rm -rf feeds/luci/themes/luci-theme-argon
